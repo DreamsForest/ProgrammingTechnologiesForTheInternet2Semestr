@@ -1,6 +1,12 @@
 <!DOCTYPE html>
-<?php ?>
-<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<?php 
+  require_once 'header.php';
+  require_once 'footer.php';
+  require_once 'logic.php';
+?>
+<html lang="ru">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
@@ -12,46 +18,49 @@
     
 
     <!-- Bootstrap core CSS -->
-<link href="./Top navbar example · Bootstrap v5.1_files/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link href="./Top navbar example · Bootstrap v5.1_files/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     
     <!-- Custom styles for this template -->
     <link href="./Top navbar example · Bootstrap v5.1_files/navbar-top.css" rel="stylesheet">
   </head>
   <body>
+
+  <form action="index.php" method="GET" style="margin-left: 200px;">   
+            <a href="StudentAdd.php" style="margin-left: 600px;">Добавить</a>
+            <table>   
+            <tr>
+            
+            <th style="padding-right: 20px;">ID</th>
+            <th style="padding-right: 20px;">Фотография</th>
+            <th style="padding-right: 20px;">ФИО студента</th>
+            <th style="padding-right: 20px;">Направление подготовки</th>
+            <th style="padding-right: 20px;">Название группы</th>
+            <th style="padding-right: 20px;">Год рождения</th>
+            
+            </tr>
+            <tr>
+            <?php foreach ($data as $row): ?>
+            <tr>
+            <td style="padding: 20px;"><?php echo htmlspecialchars($row['id']) ?></td>
+            <td style="padding: 20px;"><img src="<?php echo htmlspecialchars($row['img_student']) ?>" width="120px" height="80px"></td>
+            <td style="padding: 20px;"><?php echo htmlspecialchars($row['name_student']) ?></td>
+            <td style="padding: 20px;"><?php echo htmlspecialchars($row['course_direction']) ?></td>
+            <td style="padding: 20px;"><?php echo htmlspecialchars($row['name_group']) ?></td>
+            <td style="padding: 20px;"><?php echo htmlspecialchars($row['year']) ?></td>
+            <td>
+                <a href="StudentEdit.php?id=<?php echo $row['id']; ?>">Изменить</a>
+            </td>
+            <td style="padding-left: 50px;">
+                <a href="StudentDelete.php?id=<?php echo $row['id']; ?>">Удалить</a>
+            </td>
+        </tr>
+            <?php endforeach; ?>
     
-<nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="https://getbootstrap.com/docs/5.1/examples/navbar-static/#">Top navbar</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarCollapse">
-      <ul class="navbar-nav me-auto mb-2 mb-md-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="https://getbootstrap.com/docs/5.1/examples/navbar-static/#">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="https://getbootstrap.com/docs/5.1/examples/navbar-static/#">Link</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled">Disabled</a>
-        </li>
-      </ul>
-      
-    </div>
-  </div>
-</nav>
+        </table>
+ 
+</form>
 
-<main class="container">
-  <div class="bg-light p-5 rounded">
-    <h1>Navbar example</h1>
-    <p class="lead">This example is a quick exercise to illustrate how the top-aligned navbar works. As you scroll, this navbar remains in its original position and moves with the rest of the page.</p>
-    <a class="btn btn-lg btn-primary" href="https://getbootstrap.com/docs/5.1/components/navbar/" role="button">View navbar docs »</a>
-  </div>
-</main>
-
-
-    <script src="./Top navbar example · Bootstrap v5.1_files/bootstrap.bundle.min.js.загрузка" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<script src="./Top navbar example · Bootstrap v5.1_files/bootstrap.bundle.min.js.загрузка" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
       
   
