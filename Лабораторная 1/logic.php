@@ -2,15 +2,11 @@
 class Database
 {
     protected $connect;
-    
-    public function __construct($host, $user, $password, $dbname)
-    {
-        $this->connect = new mysqli($host, $user, $password, $dbname);
-        if ($this->connect->connect_error) {
-            die("Connection failed: " . $this->connect->connect_error);
-        }
+    private $dbInstance;
+    public function __construct($host, $user, $password, $dbname) {
+        $this -> dbInstance = DatabaseSingleton::getInstance($host, $user, $password, $dbname);
+        $this -> connect = $this -> dbInstance -> getConnect();
     }
-
     public function getGroups()
     {
         $query = "SELECT * FROM students JOIN direction  
@@ -25,6 +21,21 @@ class Database
         }
 
         return $data;
+    }
+
+    public function getCourse()
+    {
+        $query = "SELECT * FROM direction";
+        $stmt = $this->connect->prepare($query);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        $data_course = array();
+        while ($row_course = $result->fetch_assoc()) {
+            $data_course[] = $row_course;
+        }
+
+        return $data_course;
     }
 
     public function addGroup($img_student, $name_student, $course_direction, $name_group, $year)
@@ -70,6 +81,31 @@ class Database
     }
 }
 
+class DatabaseSingleton
+{
+    private static $instance = null;
+    private $connect;
+    
+    private function __construct($host, $user, $password, $dbname)
+    {
+        $this->connect = new mysqli($host, $user, $password, $dbname);
+        if ($this->connect->connect_error) {
+            die("Connection failed: " . $this->connect->connect_error);
+        }
+    }
+
+    public static function getInstance($host, $user, $password, $dbname)
+    {
+        if (self::$instance == null) {
+            self::$instance = new DatabaseSingleton($host, $user, $password, $dbname);
+        }
+        return self::$instance;
+    }
+
+    public function getConnect() {
+        return $this->connect;
+    }
+}
 
 $host = "localhost"; 
 $user = "root"; 
@@ -78,4 +114,5 @@ $dbname = "lb-1";
 
 $database = new Database($host, $user, $password, $dbname);
 $data = $database->getGroups();
+$data_course = $database->getCourse();
 ?>

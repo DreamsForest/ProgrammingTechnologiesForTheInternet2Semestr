@@ -1,32 +1,13 @@
 <!DOCTYPE html>
 <?php 
   require_once 'header.php';
-  require_once 'footer.php';
   require_once 'logic.php';
 ?>
 <html lang="ru">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-    <meta name="generator" content="Hugo 0.88.1">
-    <title>Образование в Швейцарии | Среднее и высшее образование |Условия поступления и обучения | Спецпроект Forbes Education</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link href="index.css" rel="stylesheet">
-    
-
-    <!-- Bootstrap core CSS -->
-    <link href="./Top navbar example · Bootstrap v5.1_files/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    
-    <!-- Custom styles for this template -->
-    <link href="./Top navbar example · Bootstrap v5.1_files/navbar-top.css" rel="stylesheet">
-  </head>
   <body>
 
   <form action="index.php" method="GET" style="margin-left: 200px;">   
-            <a href="StudentAdd.php" style="margin-left: 600px;">Добавить</a>
+           
             <table>   
             <tr>
             
@@ -55,13 +36,15 @@
             </td>
         </tr>
             <?php endforeach; ?>
-    
+        
         </table>
- 
+        <a href="StudentAdd.php" style="margin-left: 600px;">Добавить</a>
 </form>
-
+<?php
+  require_once 'footer.php';
+?>
 <script src="./Top navbar example · Bootstrap v5.1_files/bootstrap.bundle.min.js.загрузка" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-
+<script src="//volgu.ivsupport.ru/script.php?<?=time()?>"></script>
       
   
 
