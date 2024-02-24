@@ -17,18 +17,18 @@
             <?php foreach ($data_course as $row_course): ?>
             <tr>
             <td style="padding: 20px;"><?php echo htmlspecialchars($row_course['id_direction']) ?></td>
-            <td style="padding: 20px;"><?php echo htmlspecialchars($row_course['name_direction']) ?></td>
+            <td style="padding: 20px;"><a href="StudentList.php?id_direction=<?php echo $row_course['id_direction']; ?>"><?php echo htmlspecialchars($row_course['name_direction']) ?></a></td>
             <td>
-                <a href="CourseEdit.php?id=<?php echo $row_course['id_direction']; ?>">Изменить</a>
+                <a href="CourseEdit.php?id_direction=<?php echo $row_course['id_direction']; ?>">Изменить</a>
             </td>
             <td style="padding-left: 50px;">
-                <a href="StudentDelete.php?id=<?php echo $row_course['id_direction']; ?>">Удалить</a>
+                <a href="CourseDelete.php?id_direction=<?php echo $row_course['id_direction']; ?>">Удалить</a>
             </td>
         </tr>
             <?php endforeach; ?>
         
         </table>
-        <a href="StudentAdd.php" style="margin-left: 600px;">Добавить</a>
+        <a href="CourseAdd.php" style="margin-left: 600px;">Добавить</a>
 </form>
 <?php
   require_once 'footer.php';

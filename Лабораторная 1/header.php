@@ -29,7 +29,7 @@
                 <a class="nav-link active" aria-current="page" href="index.php">Студенты</a>
                 </li>
                 <li class="nav-item">
-                <a class="nav-link" href="course.php">Группы</a>
+                <a class="nav-link" href="course.php">Направление подготовки</a>
                 </li>
             </ul>
             
