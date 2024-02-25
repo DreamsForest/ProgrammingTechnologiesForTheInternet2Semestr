@@ -11,7 +11,7 @@
         <meta name="generator" content="Hugo 0.88.1">
         <title>Образование в Швейцарии | Среднее и высшее образование |Условия поступления и обучения | Спецпроект Forbes Education</title>
         <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-        <link href="index.css" rel="stylesheet">
+        <link href="C:\ProgrammingTechnologiesForTheInternet2Semestr\Лабораторная 1\style\index.css" rel="stylesheet">
         <!-- Bootstrap core CSS -->
         <link href="./Top navbar example · Bootstrap v5.1_files/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">   
         <!-- Custom styles for this template -->

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <?php 
-  require_once 'header.php';
-  require_once 'logic.php';
+  require_once 'C:\ProgrammingTechnologiesForTheInternet2Semestr\Лабораторная 1\шапка и подвал\header.php';
+  require_once 'C:\ProgrammingTechnologiesForTheInternet2Semestr\Лабораторная 1\logic\logic.php';
 ?>
 <html lang="ru">
   <body>
@@ -29,19 +29,19 @@
             <td style="padding: 20px;"><?php echo htmlspecialchars($row['name_group']) ?></td>
             <td style="padding: 20px;"><?php echo htmlspecialchars($row['year']) ?></td>
             <td>
-                <a href="StudentEdit.php?id=<?php echo $row['id']; ?>">Изменить</a>
+            <a href="StudentEdit.php?id=<?php echo $row['id']; ?>"><button type="button" class="btn btn-primary">Изменить</button></a>
             </td>
             <td style="padding-left: 50px;">
-                <a href="StudentDelete.php?id=<?php echo $row['id']; ?>">Удалить</a>
+                <a href="StudentDelete.php?id=<?php echo $row['id']; ?>"><button type="button" class="btn btn-danger">Удалить</button></a>
             </td>
         </tr>
             <?php endforeach; ?>
         
         </table>
-        <a href="StudentAdd.php" style="margin-left: 600px;">Добавить</a>
+        <a href="StudentAdd.php" style="margin-left: 600px;"><button type="button" class="btn btn-success">Добавить</button></a>
 </form>
 <?php
-  require_once 'footer.php';
+  require_once 'C:\ProgrammingTechnologiesForTheInternet2Semestr\Лабораторная 1\шапка и подвал\footer.php';
 ?>
 <script src="./Top navbar example · Bootstrap v5.1_files/bootstrap.bundle.min.js.загрузка" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <script src="//volgu.ivsupport.ru/script.php?<?=time()?>"></script>

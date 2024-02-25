@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <?php 
-  require_once 'header.php';
-  require_once 'logic.php';
+  require_once 'C:\ProgrammingTechnologiesForTheInternet2Semestr\Лабораторная 1\шапка и подвал\header.php';
+  require_once 'C:\ProgrammingTechnologiesForTheInternet2Semestr\Лабораторная 1\logic\logic.php';
   $database = new Database($host, $user, $password, $dbname); // Создаем объект класса
   // Получаем идентификатор направления из GET-запроса
   $idDirection = $_GET['id_direction'];
@@ -46,7 +46,7 @@
         <a href="StudentAdd.php" style="margin-left: 600px;">Добавить</a>
 </form>
 <?php
-  require_once 'footer.php';
+  require_once 'C:\ProgrammingTechnologiesForTheInternet2Semestr\Лабораторная 1\шапка и подвал\footer.php';
 ?>
 <script src="./Top navbar example · Bootstrap v5.1_files/bootstrap.bundle.min.js.загрузка" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <script src="//volgu.ivsupport.ru/script.php?<?=time()?>"></script>

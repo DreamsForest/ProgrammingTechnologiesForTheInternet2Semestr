@@ -1,5 +1,5 @@
 <?php
-require_once 'logic.php';
+require_once 'C:\ProgrammingTechnologiesForTheInternet2Semestr\Лабораторная 1\logic\logic.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
     $id_direction = $_GET['id_direction'];

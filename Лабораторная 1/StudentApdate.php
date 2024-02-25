@@ -1,12 +1,12 @@
 <?php
-require_once 'logic.php';
+require_once 'C:\ProgrammingTechnologiesForTheInternet2Semestr\Лабораторная 1\logic\logic.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Получаем данные из POST-запроса
     $id = filter_var($_POST['id'], FILTER_VALIDATE_INT);
-    $name_student =  htmlspecialchars($_POST['name_student']);
+    $name_student =  mysqli_real_escape_string($database->getConnect(), $_POST['name_student']);
     $course_direction = filter_var($_POST['course_direction'], FILTER_VALIDATE_INT);
-    $name_group =  htmlspecialchars($_POST['name_group']);
+    $name_group =  mysqli_real_escape_string($database->getConnect(), $_POST['name_group']);
     $year = filter_var($_POST['year'], FILTER_VALIDATE_INT);
 
     if (isset($_FILES['img_student']['error']) && $_FILES['img_student']['error'] === UPLOAD_ERR_NO_FILE) {
