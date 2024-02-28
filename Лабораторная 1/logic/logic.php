@@ -3,18 +3,17 @@ class Database
 {
     protected $connect;
     private $dbInstance;
-    public function __construct($host, $user, $password, $dbname) {
-        $this -> dbInstance = DatabaseSingleton::getInstance($host, $user, $password, $dbname);
-        $this -> connect = $this -> dbInstance -> getConnect();
+    public function __construct($host, $user, $password, $dbname) {                                //установить соединение с базой данных при создании объекта этого класса,    
+        $this -> dbInstance = DatabaseSingleton::getInstance($host, $user, $password, $dbname);    //используя Singleton для обеспечения единственного экземпляра соединения 
+        $this -> connect = $this -> dbInstance -> getConnect();                                    //с базой данных на протяжении жизненного цикла приложения
     }
     public function getGroups()
     {
         $query = "SELECT * FROM students JOIN direction  
             ON students.course_direction = direction.id_direction";
-        $stmt = $this->connect->prepare($query);
-        $stmt->execute();
-        $result = $stmt->get_result();
-
+        $stmt = $this->connect->prepare($query); //Защита от sql-иньекций
+        $stmt->execute();                        //Запуск выполнения подготовленного запроса к базе данных
+        $result = $stmt->get_result();          //После выполнения запроса получаем результат запроса с помощью метода
         $data = array();
         while ($row = $result->fetch_assoc()) {
             $data[] = $row;
@@ -26,7 +25,7 @@ class Database
     {
         $query = "SELECT * FROM students WHERE course_direction = ?";
         $stmt = $this->connect->prepare($query);
-        $stmt->bind_param("i", $idDirection); // "i" означает integer
+        $stmt->bind_param("i", $idDirection); 
         $stmt->execute();
         $result = $stmt->get_result();
 
@@ -56,7 +55,7 @@ class Database
     {
         $query = "INSERT INTO students (img_student, name_student, course_direction, name_group, year) VALUES (?, ?, ?, ?, ?)";
         $stmt = $this->connect->prepare($query);
-        $stmt->bind_param("ssisi", $img_student, $name_student, $course_direction, $name_group, $year);
+        $stmt->bind_param("ssisi", $img_student, $name_student, $course_direction, $name_group, $year);  //метод подготовленного выражения, используемый для привязки переменных к параметрам в SQL запросе
         if ($stmt->execute()) {
             echo "Data added successfully";
         } else {
@@ -81,7 +80,7 @@ class Database
 
     public function updateCourse($id_direction, $name_direction)
     {
-        $this->connect->begin_transaction(); // Начинаем транзакцию
+        $this->connect->begin_transaction(); // Начинаем транзакцию(все последующие операции с базой данных будут представлять одну атомарную операцию, и либо все операции будут успешно завершены, либо ни одна из них не будет выполнена)
 
         $query1 = "UPDATE direction SET name_direction = ? WHERE id_direction = ?";
         $stmt1 = $this->connect->prepare($query1);
@@ -139,32 +138,10 @@ class Database
         echo "Направление содержит студентов. Удаление невозможно.";
     }
     }
-
-    private function updateCourseAndDeleteDirection($id_direction)
-    {
-        $query = "UPDATE students SET course_direction = NULL WHERE course_direction = ?";
-        $stmt = $this->connect->prepare($query);
-        $stmt->bind_param("i", $id_direction);
-        $stmt->execute();
-        header('Location: course.php');
-        $query = "DELETE FROM direction WHERE id_direction = ?";
-        $stmt = $this->connect->prepare($query);
-        $stmt->bind_param("i", $id_direction);
-        $stmt->execute();
-    }
-
-    public function getExistingGroup($id)
-    {
-        $query = "SELECT * FROM students WHERE id = ?";
-        $stmt = $this->connect->prepare($query);
-        $stmt->bind_param("i", $id);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        return $result->fetch_assoc();
-    }
+    
 }
 
-class DatabaseSingleton
+class DatabaseSingleton  // создать единственное соединение с базой данных
 {
     private static $instance = null;
     private $connect;
@@ -180,7 +157,7 @@ class DatabaseSingleton
     public static function getInstance($host, $user, $password, $dbname)
     {
         if (self::$instance == null) {
-            self::$instance = new DatabaseSingleton($host, $user, $password, $dbname);
+            self::$instance = new DatabaseSingleton($host, $user, $password, $dbname);               //self - используется для доступа к статическим свойствам и методам внутри класса без создания экземпляра этого класса
         }
         return self::$instance;
     }

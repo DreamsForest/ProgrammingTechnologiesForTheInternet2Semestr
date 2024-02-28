@@ -5,7 +5,7 @@
 if (isset($_GET['id_direction'])) {
     $id = $_GET['id_direction'];
     $query = "SELECT * FROM direction WHERE id_direction = $id";
-    $result = mysqli_query($database->getConnect(), $query); // Используем свойство connect
+    $result = mysqli_query($database->getConnect(), $query);
     $row_course = mysqli_fetch_assoc($result);
 }
 
@@ -17,7 +17,7 @@ if (isset($_GET['id_direction'])) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Form</title>
-    <script src="C:\ProgrammingTechnologiesForTheInternet2Semestr\Лабораторная 1\js\course.js"></script>
+    <script src="course.js"></script>
     </head>
     <body>
     <form action="CourseApdate.php" method="POST" enctype="multipart/form-data" style="margin-left: 450px;">

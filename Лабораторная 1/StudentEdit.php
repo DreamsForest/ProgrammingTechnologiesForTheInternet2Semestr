@@ -17,7 +17,7 @@ if (isset($_GET['id'])) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Изменить данные студента</title>
-    <script src="C:\ProgrammingTechnologiesForTheInternet2Semestr\Лабораторная 1\js\index.js"></script>
+    <script src="index.js"></script>
     </head>
     <body>
     <form action="StudentApdate.php" method="POST" enctype="multipart/form-data" style="margin-left: 450px;">
