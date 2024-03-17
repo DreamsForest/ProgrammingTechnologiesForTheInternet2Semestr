@@ -5,7 +5,7 @@
 [
     {
       "id": "36",
-      "img_student": "/img/1666237073_26-mykaleidoscope-ru-p-grustnii-student-pinterest-35.jpg",
+      "img_student": "@/img/1666237073_26-mykaleidoscope-ru-p-grustnii-student-pinterest-35.jpg",
       "name_student": "Гаврилов Демид Сергеевич",
       "course_direction": "8",
       "name_group": "ПРИБ",
@@ -13,7 +13,7 @@
     },
     {
       "id": "37",
-      "img_student": "/img/glavnaja-student-s-knigami-v-rukah-sidit-na-skame.jpg",
+      "img_student": "@/img/glavnaja-student-s-knigami-v-rukah-sidit-na-skame.jpg",
       "name_student": "Мухин Виталий Андреевич",
       "course_direction": "8",
       "name_group": "ПИБ",

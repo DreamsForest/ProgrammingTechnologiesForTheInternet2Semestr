@@ -1,26 +1,26 @@
 <template>
+  <Header/>
   <div>
     <form style="margin-left: 200px;">
       <table>
         <thead>
           <tr>
-            <th>ID</th>
-            <th>Фотография</th>
-            <th>ФИО студента</th>
-            <th>Направление подготовки</th>
-            <th>Название группы</th>
-            <th>Год рождения</th>
-            <th>Действия</th>
+            <th style="padding-right: 20px;">ID</th>
+            <th style="padding-right: 20px;">Фотография</th>
+            <th style="padding-right: 20px;">ФИО студента</th>
+            <th style="padding-right: 20px;">Направление подготовки</th>
+            <th style="padding-right: 20px;">Название группы</th>
+            <th style="padding-right: 20px;">Год рождения</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="student in students" :key="student.id">
-            <td>{{ student.id }}</td>
-            <td><img :src="student.img_student" width="120px" height="80px"></td>
-            <td>{{ student.name_student }}</td>
-            <td>{{ student.course_direction }}</td>
-            <td>{{ student.name_group }}</td>
-            <td>{{ student.year }}</td>
+            <td style="padding: 20px;">{{ student.id }}</td>
+            <td style="padding: 20px;"><img :src="student.img_student" width="120px" height="80px"></td>
+            <td style="padding: 20px;">{{ student.name_student }}</td>
+            <td style="padding: 20px;">{{ student.course_direction }}</td>
+            <td style="padding: 20px;">{{ student.name_group }}</td>
+            <td style="padding: 20px;">{{ student.year }}</td>
             <td>
               <a href="#"><button type="button" class="btn btn-primary">Изменить</button></a>
               <a href="#"><button type="button" class="btn btn-danger">Удалить</button></a>
@@ -28,16 +28,24 @@
           </tr>
         </tbody>
       </table>
-      <a href="#" style="margin-left: 600px;"><button type="button" class="btn btn-success">Добавить</button></a>
+      <a href="#" style="margin-left: 400px;"><button type="button" class="btn btn-success">Добавить</button></a>
     </form>
   </div>
+  <Footer/>
 </template>
 
 <script>
+import Footer from '@/components/Footer.vue'
+import Header from '@/components/Header.vue'
+
 export default {
   name: 'StudentDetails',
   props: {
     msg: String
+  },
+  components: {
+    Footer,
+    Header
   },
   data() {
     return {
