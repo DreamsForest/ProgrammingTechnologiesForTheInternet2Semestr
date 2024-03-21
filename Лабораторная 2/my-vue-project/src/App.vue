@@ -2,7 +2,7 @@
  <router-view></router-view>
 </template>
 
-<script src="//volgu.ivsupport.ru/script.php?<?=time()?>">
+<script >
 
 
 export default {
