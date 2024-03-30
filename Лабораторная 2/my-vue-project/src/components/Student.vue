@@ -1,5 +1,5 @@
 <template>
-  <Header/>
+  <Header />
   <div>
     <form style="margin-left: 200px;">
       <table>
@@ -11,6 +11,7 @@
             <th style="padding-right: 20px;">Направление подготовки</th>
             <th style="padding-right: 20px;">Название группы</th>
             <th style="padding-right: 20px;">Год рождения</th>
+            <th style="padding-right: 20px;">Действия</th>
           </tr>
         </thead>
         <tbody>
@@ -22,50 +23,68 @@
             <td style="padding: 20px;">{{ student.name_group }}</td>
             <td style="padding: 20px;">{{ student.year }}</td>
             <td>
-              <a href="#"><button type="button" class="btn btn-primary">Изменить</button></a>
-              <a href="#"><button type="button" class="btn btn-danger">Удалить</button></a>
+              <a href="#"><button type="button" @click="deleteStudent(student.id)" class="btn btn-danger">Удалить</button></a>
+              <router-link :to="'/StudentEdit/' + student.id">
+                <button type="button" class="btn btn-primary">
+                  Изменить
+                </button>
+              </router-link>
             </td>
           </tr>
         </tbody>
       </table>
-      <a href="#" style="margin-left: 400px;"><button type="button" class="btn btn-success">Добавить</button></a>
+      <router-link to="/StudentAdd"><a href="#" style="margin-left: 400px;"><button type="button" class="btn btn-success">Добавить</button></a></router-link>
     </form>
   </div>
-  <Footer/>
+  <Footer />
 </template>
 
 <script>
-import Footer from '@/components/Footer.vue'
-import Header from '@/components/Header.vue'
+import Footer from "@/components/Footer.vue";
+import Header from "@/components/Header.vue";
 
 export default {
-  name: 'StudentDetails',
+  name: "StudentDetails",
   props: {
-    msg: String
+    msg: String,
   },
   components: {
     Footer,
-    Header
+    Header,
   },
   data() {
     return {
-      students: []
+      students: [],
     };
   },
   mounted() {
-    fetch('rest/students.json') 
-      .then(response => response.json())
-      .then(data => {
-        this.students = data[2].data; 
+    fetch("rest/students.json")
+      .then((response) => response.json())
+      .then((data) => {
+        this.students = data[2].data;
       })
-      .catch(error => {
-        console.error('Error fetching JSON: ', error);
+      .catch((error) => {
+        console.error("Error fetching JSON: ", error);
       });
-  }
-  
+  },
+  methods: {
+    async deleteStudent(id) {
+      try {
+        await fetch("rest/student.json" , { method: "DELETE" });
+        // Ничего не делаем с ответом
+      } catch (error) {
+        // Ничего не делаем с ошибкой
+      }
+      // Визуально удаляем запись из списка студентов
+      this.students = this.students.filter((student) => student.id !== id);
+    },
+    editStudent(id) {
+      this.$router.push({ name: 'StudentEdit', params: { id } });
+    },
+  },
 };
 </script>
-<!-- Add "scoped" attribute to limit CSS to this component only -->
+
 <style scoped>
 h3 {
   margin: 40px 0 0;
