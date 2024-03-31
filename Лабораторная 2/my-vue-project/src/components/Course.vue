@@ -7,15 +7,19 @@
               <th style="padding-right: 20px;">Направление подготовки</th>
             </tr>
             <tr v-for="direction in direction" :key="direction.id_direction">
-              <td style="padding: 20px;">{{ direction.id_direction }}</td>
+              <router-link :to="'/StudentList/' + selectedDirection"><td style="padding: 20px;">{{ direction.id_direction }}</td></router-link>
               <td style="padding: 20px;">{{ direction.name_direction }}</td>
               <td>
-                <a href="#"><button type="button" class="btn btn-primary">Изменить</button></a>
-                <a href="#"><button type="button" class="btn btn-danger">Удалить</button></a>
+                <router-link :to="'/CourseEdit/' + direction.id_direction">
+                  <button type="button" class="btn btn-primary">
+                    Изменить
+                  </button>
+                </router-link>
+                <button type="button" @click="deleteStudent(direction.id_direction)" class="btn btn-danger">Удалить</button>
               </td>
             </tr>
           </table>
-    <a href="#" style="margin-left: 600px;"><button type="button" class="btn btn-success">Добавить</button></a>
+          <router-link to="/CourseAdd"><button type="button" class="btn btn-success" style="margin-left: 400px;">Добавить</button></router-link>
     </form>    
     <Footer/>
 </template>
@@ -36,7 +40,8 @@ export default {
     },
     data() {
     return {
-      direction: []
+      direction: [],
+      selectedDirection: null
     }
   },
   mounted() {
@@ -49,6 +54,21 @@ export default {
       .catch(error => {
         console.error('Error fetching JSON: ', error);
       });
+  },
+  methods: {
+    async deleteStudent(id_direction) {
+      try {
+        await fetch("rest/direction.json" , { method: "DELETE" });
+        // Ничего не делаем с ответом
+      } catch (error) {
+        // Ничего не делаем с ошибкой
+      }
+      // Визуально удаляем запись из списка студентов
+      this.direction = this.direction.filter((direction) => direction.id_direction !== id_direction);
+    },
+    editStudent(id_direction) {
+      this.$router.push({ name: 'CourseEdit', params: { id_direction } });
+    },
   },
     
 };

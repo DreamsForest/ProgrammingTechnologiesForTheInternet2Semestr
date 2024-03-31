@@ -23,7 +23,7 @@
             <td style="padding: 20px;">{{ student.name_group }}</td>
             <td style="padding: 20px;">{{ student.year }}</td>
             <td>
-              <a href="#"><button type="button" @click="deleteStudent(student.id)" class="btn btn-danger">Удалить</button></a>
+              <button type="button" @click="deleteStudent(student.id)" class="btn btn-danger">Удалить</button>
               <router-link :to="'/StudentEdit/' + student.id">
                 <button type="button" class="btn btn-primary">
                   Изменить
@@ -33,7 +33,7 @@
           </tr>
         </tbody>
       </table>
-      <router-link to="/StudentAdd"><a href="#" style="margin-left: 400px;"><button type="button" class="btn btn-success">Добавить</button></a></router-link>
+      <router-link to="/StudentAdd"><button type="button" class="btn btn-success" style="margin-left: 400px;">Добавить</button></router-link>
     </form>
   </div>
   <Footer />
