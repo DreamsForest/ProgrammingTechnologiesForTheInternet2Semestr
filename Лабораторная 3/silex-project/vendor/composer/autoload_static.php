@@ -43,7 +43,12 @@ class ComposerStaticInit85677501dca45c0b473c524c2f1a82b0
         'P' => 
         array (
             'Psr\\Log\\' => 8,
+            'Psr\\Http\\Message\\' => 17,
             'Psr\\Container\\' => 14,
+        ),
+        'N' => 
+        array (
+            'Neomerx\\Cors\\' => 13,
         ),
     );
 
@@ -124,9 +129,17 @@ class ComposerStaticInit85677501dca45c0b473c524c2f1a82b0
         array (
             0 => __DIR__ . '/..' . '/psr/log/src',
         ),
+        'Psr\\Http\\Message\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/http-message/src',
+        ),
         'Psr\\Container\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/container/src',
+        ),
+        'Neomerx\\Cors\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/neomerx/cors-psr7/src',
         ),
     );
 

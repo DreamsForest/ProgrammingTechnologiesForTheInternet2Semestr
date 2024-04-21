@@ -17,7 +17,6 @@
         <tbody>
           <tr v-for="student in students" :key="student.id">
             <td style="padding: 20px;">{{ student.id }}</td>
-            <!--<td style="padding: 20px;"><img :src="require(student.img_student)" width="120px" height="80px"></td>-->
             <td style="padding: 20px;">{{ student.name_student }}</td>
             <td style="padding: 20px;">{{ student.course_direction }}</td>
             <td style="padding: 20px;">{{ student.name_group }}</td>
@@ -33,7 +32,9 @@
           </tr>
         </tbody>
       </table>
-      <router-link to="/StudentAdd"><button type="button" class="btn btn-success" style="margin-left: 400px;">Добавить</button></router-link>
+      <router-link to="/StudentAdd">
+        <button type="button" class="btn btn-success" style="margin-left: 400px;">Добавить</button>
+      </router-link>
     </form>
   </div>
   <Footer />
@@ -58,30 +59,24 @@ export default {
     };
   },
   mounted() {
-    fetch("rest/students.json")
-      .then((response) => response.json())
-      .then((data) => {
-        this.students = data[2].data;
-      })
-      .catch((error) => {
-        console.error("Error fetching JSON: ", error);
-      });
+    this.getData();
   },
   methods: {
-    async deleteStudent(id) {
+    async getData() {
       try {
-        await fetch("rest/student.json" , { method: "DELETE" });
-        // Ничего не делаем с ответом
+        const response = await fetch('http://localhost:80/');
+        const data = await response.json();
+        if (data.message) {
+          console.log('Message from API:', data.message);
+          // Делайте что-то с сообщением, например, сохраняйте его в переменную для отображения в шаблоне
+          this.message = data.message;
+        }
       } catch (error) {
-        // Ничего не делаем с ошибкой
+        console.error('Error:', error);
       }
-      // Визуально удаляем запись из списка студентов
-      this.students = this.students.filter((student) => student.id !== id);
-    },
-    editStudent(id) {
-      this.$router.push({ name: 'StudentEdit', params: { id } });
-    },
-  },
+    }
+  }
+  
 };
 </script>
 

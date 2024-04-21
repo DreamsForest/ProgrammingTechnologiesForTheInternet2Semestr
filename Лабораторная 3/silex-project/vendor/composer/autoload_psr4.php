@@ -25,5 +25,7 @@ return array(
     'Symfony\\Component\\Debug\\' => array($vendorDir . '/symfony/debug'),
     'Silex\\' => array($vendorDir . '/silex/silex/src/Silex'),
     'Psr\\Log\\' => array($vendorDir . '/psr/log/src'),
+    'Psr\\Http\\Message\\' => array($vendorDir . '/psr/http-message/src'),
     'Psr\\Container\\' => array($vendorDir . '/psr/container/src'),
+    'Neomerx\\Cors\\' => array($vendorDir . '/neomerx/cors-psr7/src'),
 );

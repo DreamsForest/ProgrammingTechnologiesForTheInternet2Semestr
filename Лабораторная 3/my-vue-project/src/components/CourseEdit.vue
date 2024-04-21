@@ -28,26 +28,7 @@
         name_direction: '',
       };
     },
-    methods: {
-        async saveCourse() {
-            try {
-                await fetch('rest/direction.json', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    name_direction: this.name_direction,
-                }),
-                });
-
-                // Ничего не делаем с ответом
-            } catch (error) {
-                // Обрабатываем ошибку
-                console.error('Произошла ошибка при сохранении данных:', error);
-            }
-        },
-    }
+    
   };
 </script>
 

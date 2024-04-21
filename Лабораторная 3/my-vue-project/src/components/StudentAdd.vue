@@ -38,35 +38,26 @@ export default {
   },
   methods: {
     saveStudent() {
-      const newStudent = {
-        name_student: this.name_student,
-        course_direction: this.course_direction,
-        name_group: this.name_group,
-        year: this.year
-      };
-
-      fetch('rest/students.json', {
-        method: 'POST',
+      fetch("http://localhost/student/add", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json'
         },
-        body: JSON.stringify(newStudent),
+        body: JSON.stringify({
+          name: this.name_student,
+          course_direction: this.course_direction,
+          name_group: this.name_group,
+          year: this.year
+        })
       })
-        .then(response => {
-          if (!response.ok) {
-            throw new Error('Network response was not ok');
-          }
-          return response.json();
-        })
-        .then(data => {
-          console.log('Данные сохранены:', data);
-          this.$router.push("/Student");
-        })
-        .catch(error => {
-          console.error('Произошла ошибка при сохранении данных:', error);
-        });
-    },
-  },
+      .then(() => {
+        // Обработка успешного добавления
+      })
+      .catch((error) => {
+        console.error("Ошибка при добавлении студента: ", error);
+      });
+    }
+  }
 };
 </script>
 

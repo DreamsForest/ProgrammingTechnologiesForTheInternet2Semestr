@@ -35,28 +35,22 @@
       };
     },
     methods: {
-        async saveStudent() {
-            try {
-                await fetch('rest/students.json', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    name_student: this.name_student,
-                    course_direction: this.course_direction,
-                    name_group: this.name_group,
-                    year: this.year
-                }),
-                });
-
-                // Ничего не делаем с ответом
-            } catch (error) {
-                // Обрабатываем ошибку
-                console.error('Произошла ошибка при сохранении данных:', error);
-            }
+    saveStudent() {
+      fetch("http://localhost/student/update", {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json'
         },
+        body: JSON.stringify(this.editedStudent)
+      })
+      .then(() => {
+        // Обработка успешного обновления
+      })
+      .catch((error) => {
+        console.error("Ошибка при обновлении студента: ", error);
+      });
     }
+  }
   };
 </script>
 

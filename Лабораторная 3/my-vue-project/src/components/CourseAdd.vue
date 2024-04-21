@@ -30,34 +30,7 @@
         name_direction: '',
       };
     },
-    methods: {
-      saveCourse() {
-        const newDirection = {
-          name_direction: this.name_direction,
-        };
-  
-        fetch('rest/direction.json', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(newDirection),
-        })
-          .then(response => {
-            if (!response.ok) {
-              throw new Error('Network response was not ok');
-            }
-            return response.json();
-          })
-          .then(data => {
-            console.log('Данные сохранены:', data);
-            this.$router.push("/Course");
-          })
-          .catch(error => {
-            console.error('Произошла ошибка при сохранении данных:', error);
-          });
-      },
-    },
+    
   };
   </script>
   
