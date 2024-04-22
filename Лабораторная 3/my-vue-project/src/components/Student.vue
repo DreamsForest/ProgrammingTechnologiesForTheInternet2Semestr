@@ -6,7 +6,6 @@
         <thead>
           <tr>
             <th style="padding-right: 20px;">ID</th>
-            <!--<th style="padding-right: 20px;">Фотография</th>-->
             <th style="padding-right: 20px;">ФИО студента</th>
             <th style="padding-right: 20px;">Направление подготовки</th>
             <th style="padding-right: 20px;">Название группы</th>
@@ -32,9 +31,6 @@
           </tr>
         </tbody>
       </table>
-      <router-link to="/StudentAdd">
-        <button type="button" class="btn btn-success" style="margin-left: 400px;">Добавить</button>
-      </router-link>
     </form>
   </div>
   <Footer />
@@ -46,9 +42,6 @@ import Header from "@/components/Header.vue";
 
 export default {
   name: "StudentDetails",
-  props: {
-    msg: String,
-  },
   components: {
     Footer,
     Header,
@@ -64,19 +57,37 @@ export default {
   methods: {
     async getData() {
       try {
-        const response = await fetch('http://localhost:80/');
-        const data = await response.json();
-        if (data.message) {
-          console.log('Message from API:', data.message);
-          // Делайте что-то с сообщением, например, сохраняйте его в переменную для отображения в шаблоне
-          this.message = data.message;
-        }
+        const response = await fetch('http://localhost/index.php');
+        const studentsData = await response.json();
+        
+        this.students = studentsData;
       } catch (error) {
         console.error('Error:', error);
       }
+    },
+    async deleteStudent(id) {
+    try {
+      const url = `http://localhost/index.php/${id}`;
+      console.log("DELETE request to URL:", url);
+      
+      const response = await fetch(url, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (response.ok) {
+        this.students = this.students.filter(student => student.id !== id);
+      } else {
+        console.error('Error deleting student');
+      }
+    } catch (error) {
+      console.error('Error:', error);
     }
   }
-  
+
+  }
 };
 </script>
 

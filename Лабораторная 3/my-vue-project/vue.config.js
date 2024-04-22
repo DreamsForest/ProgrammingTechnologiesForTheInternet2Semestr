@@ -6,6 +6,7 @@ module.exports = defineConfig({
     proxy: {
       '/api': {
         target: 'http://localhost:80',  // Адрес вашего Silex сервера
+        ws: true,
         changeOrigin: true
       }
     }
