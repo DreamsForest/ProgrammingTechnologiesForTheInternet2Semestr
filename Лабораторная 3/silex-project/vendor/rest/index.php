@@ -43,5 +43,9 @@ $app->delete('/{id}', function ($id, Request $request) use ($database) {
     }
 });
 
+// добавляем обработку CORS для запросов DELETE
+$app->options('/{id}', function ($id, Request $request) use ($app) {
+    return '';
+});
 $app->run();
 ?>
