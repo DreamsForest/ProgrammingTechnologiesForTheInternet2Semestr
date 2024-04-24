@@ -43,9 +43,37 @@ $app->delete('/{id}', function ($id, Request $request) use ($database) {
     }
 });
 
+
 // добавляем обработку CORS для запросов DELETE
 $app->options('/{id}', function ($id, Request $request) use ($app) {
     return '';
 });
+
+
+// Обработка PUT запроса
+$app->match('/{id}', function ($id, Request $request) use ($app, $database) {
+    if ($request->isMethod('PUT')) {
+        // Получаем данные из тела запроса
+        $data = json_decode($request->getContent(), true);
+
+        // Дополнительные данные, которые могут прийти из формы\
+        $id = $data['id'];
+        $img_student = $data['img_student']; 
+        $name_student = $data['name_student'];
+        $course_direction = $data['course_direction'];
+        $name_group = $data['name_group'];
+        $year = $data['year'];
+
+        // Вызываем метод обновления записи в базе данных
+        $database->updateGroup($id, $img_student, $name_student, $course_direction, $name_group, $year);
+
+        // Возвращаем успешный ответ
+        return new Response("Student with ID $id successfully updated", 200);
+    }
+
+    // Если метод запроса не PUT, возвращаем ошибку
+    return new Response('Invalid request method.', 405);
+})->method('PUT');
+
 $app->run();
 ?>

@@ -6,6 +6,7 @@
         <thead>
           <tr>
             <th style="padding-right: 20px;">ID</th>
+            <th style="padding-right: 20px;">Фотография</th>
             <th style="padding-right: 20px;">ФИО студента</th>
             <th style="padding-right: 20px;">Направление подготовки</th>
             <th style="padding-right: 20px;">Название группы</th>
@@ -16,6 +17,7 @@
         <tbody>
           <tr v-for="student in students" :key="student.id">
             <td style="padding: 20px;">{{ student.id }}</td>
+            <td style="padding: 20px;"><img :src="student.img_student" width="120px" height="80px"></td>
             <td style="padding: 20px;">{{ student.name_student }}</td>
             <td style="padding: 20px;">{{ student.course_direction }}</td>
             <td style="padding: 20px;">{{ student.name_group }}</td>
@@ -85,7 +87,27 @@ export default {
     } catch (error) {
       console.error('Error:', error);
     }
-  }
+  },
+  async updateStudent(id, updatedData) {
+      try {
+        const response = await fetch(`http://localhost/index.php/${id}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(updatedData)
+        });
+
+        if (response.ok) {
+          console.log('Student data updated successfully');
+          // Обновить данные о студенте на фронтенде
+        } else {
+          console.error('Error updating student data');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    }
 
   }
 };
