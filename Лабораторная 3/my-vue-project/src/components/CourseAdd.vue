@@ -2,7 +2,7 @@
     <Header />
     <div>
       <form style="margin-left: 450px;" @submit.prevent="saveCourse">    
-        <input placeholder="Название направления" type="text" name="name_direction" class="form-control rounded-pill" style="width:700px;margin-bottom:25px;">
+        <input v-model="name_direction" placeholder="Название направления" type="text" name="name_direction" class="form-control rounded-pill" style="width:700px;margin-bottom:25px;">
         <button type="submit" class="btn btn-success" style="margin-right:650px;">Сохранить</button>
       </form>
       <router-link to="/Course">
@@ -30,9 +30,35 @@
         name_direction: '',
       };
     },
+    methods: {
+      async saveCourse() {
+        const courseData = {
+          name_direction: this.name_direction,
+    };
     
-  };
-  </script>
+    try {
+      const response = await fetch('http://localhost/index.php/CourseAdd',{
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(courseData)
+      });
+
+      if (response.ok){
+        console.log('Course added successfully');
+        // Добавить обработку успешного добавления
+        this.$router.push('/Course');
+      } else {
+        console.error('Error adding student');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+    }
+  }
+};
+</script>
   
   <style scoped>
     h3 {

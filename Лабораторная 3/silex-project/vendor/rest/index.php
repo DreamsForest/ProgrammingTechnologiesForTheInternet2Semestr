@@ -32,6 +32,11 @@ $app->get('/', function() use ($database) {
     $students = $database->getGroups();
     return json_encode($students);
 });
+// Маршрут для получения списка направлений
+$app->get('/course', function() use ($database) {
+    $students = $database->getCourse();
+    return json_encode($students);
+});
 
 // Маршрут для удаления студента по ID
 $app->delete('/{id}', function ($id, Request $request) use ($database) {
@@ -43,9 +48,24 @@ $app->delete('/{id}', function ($id, Request $request) use ($database) {
     }
 });
 
+// Маршрут для удаления направления по id_direction
+$app->delete('/course/{id_direction}', function ($id_direction, Request $request) use ($database) {
+    if ($request->getMethod() === 'DELETE') {
+        $database->deleteDirection($id_direction);
+        return new Response("Course with ID $id_direction successfully deleted", 200);
+    } else {
+        return new Response("Method Not Allowed", 405);
+    }
+});
+
 
 // добавляем обработку CORS для запросов DELETE
 $app->options('/{id}', function ($id, Request $request) use ($app) {
+    return '';
+});
+
+// добавляем обработку CORS для запросов DELETE
+$app->options('/course/{id_direction}', function ($id_direction, Request $request) use ($app) {
     return '';
 });
 
@@ -74,6 +94,56 @@ $app->match('/{id}', function ($id, Request $request) use ($app, $database) {
     // Если метод запроса не PUT, возвращаем ошибку
     return new Response('Invalid request method.', 405);
 })->method('PUT');
+
+
+// Маршруты для обработки CORS (Post теперь не блокируется). Добавление студента
+$app->match('/', function(Request $request) use ($database) {
+    $response = new Response();
+    $response->headers->set('Access-Control-Allow-Origin', 'http://localhost:8080/index.php/CourseAdd');
+    $response->headers->set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    $response->headers->set('Access-Control-Allow-Headers', 'Origin, Content-Type, Accept, Authorization');
+
+    if ($request->getMethod() === 'OPTIONS') {
+        return $response;
+    }
+
+    // Обработка запроса
+    $method = $request->getMethod();
+    if ($method === 'POST') {
+        $data = json_decode($request->getContent(), true);
+        $img_student = $data['img_student'];
+        $name_student = $data['name_student'];
+        $course_direction = $data['course_direction'];
+        $name_group = $data['name_group'];
+        $year = $data['year'];
+        $database->addGroup($img_student, $name_student, $course_direction, $name_group, $year);
+        return new Response("Student added successfully", 200);
+    }
+
+    return new Response('Method Not Allowed', 405);
+});
+
+// Маршруты для обработки CORS (Post теперь не блокируется). Добавление направления
+$app->match('/CourseAdd', function(Request $request) use ($database) {
+    $response = new Response();
+    $response->headers->set('Access-Control-Allow-Origin', 'http://localhost:8080');
+    $response->headers->set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    $response->headers->set('Access-Control-Allow-Headers', 'Origin, Content-Type, Accept, Authorization');
+
+    if ($request->getMethod() === 'OPTIONS') {
+        return $response;
+    }
+
+    // Обработка запроса
+    if ($request->getMethod() === 'POST') {
+        $data = json_decode($request->getContent(), true);
+        $name_direction = $data['name_direction'];
+        $database->addCourse($name_direction);
+        return new Response("Course added successfully", 200);
+    }
+
+    return new Response('Method Not Allowed', 405);
+});
 
 $app->run();
 ?>

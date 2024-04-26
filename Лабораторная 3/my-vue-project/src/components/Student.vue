@@ -33,6 +33,7 @@
           </tr>
         </tbody>
       </table>
+      <router-link to="/StudentAdd"><button type="button" class="btn btn-success" style="margin-left: 400px;">Добавить</button></router-link>
     </form>
   </div>
   <Footer />

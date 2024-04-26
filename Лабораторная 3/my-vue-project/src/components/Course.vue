@@ -42,30 +42,62 @@ export default {
       directions: [],
     };
   },
-  mounted() {
-    fetch("rest/direction.json")
-      .then((response) => response.json())
-      .then((data) => {
-        this.directions = data[2].data;
-      })
-      .catch((error) => {
-        console.error("Error fetching JSON: ", error);
-      });
+  mounted(){
+    this.getDataCourse();
   },
   methods: {
-    async deleteDirection(id_direction) {
+    async getDataCourse() {
       try {
-        await fetch("rest/direction.json", { method: "DELETE" });
-        // Ничего не делаем с ответом
+        const response = await fetch('http://localhost/index.php/course');
+        const directionsData = await response.json();
+        
+        this.directions = directionsData;
       } catch (error) {
-        // Ничего не делаем с ошибкой
+        console.error('Error:', error);
       }
-      // Визуально удаляем запись из списка направлений
-      this.directions = this.directions.filter(
-        (direction) => direction.id_direction !== id_direction
-      );
     },
+    async deleteDirection(id_direction) {
+    try {
+      const url = `http://localhost/index.php/course/${id_direction}`;
+      console.log("DELETE request to URL:", url);
+      
+      const response = await fetch(url, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (response.ok) {
+        this.directions = this.directions.filter(direction => direction.id_direction !== id_direction);
+      } else {
+        console.error('Error deleting student');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
   },
+  async updateDirection(id_direction, updatedData) {
+      try {
+        const response = await fetch(`http://localhost/course/${id_direction}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(updatedData)
+        });
+
+        if (response.ok) {
+          console.log('Student data updated successfully');
+          // Обновить данные о студенте на фронтенде
+        } else {
+          console.error('Error updating student data');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    }
+  }
 };
 </script>
 
