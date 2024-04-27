@@ -2,7 +2,8 @@
     <Header />
     <div>
         <form @submit.prevent="saveCourse" style="margin-left: 450px;">
-            <input placeholder="Название направления" type="text" name="name_direction" class="form-control rounded-pill" style="width:700px;margin-bottom:25px;">
+            <input type="hidden" name="id_direction" v-model="direction.id_direction">
+            <input placeholder="Название направления" type="text" v-model="direction.name_direction" name="name_direction" class="form-control rounded-pill" style="width:700px;margin-bottom:25px;">
             <button type="submit" class="btn btn-success" style="margin-right:650px;">Сохранить</button>
         </form>
         <router-link to="/Course"><button type="submit" class="btn btn-success" style="margin-right:850px;">Вернуться</button></router-link>
@@ -25,9 +26,44 @@
     },
     data() {
       return {
+        direction: {
         name_direction: '',
+        id_direction: '',
+        }
       };
     },
+    created() {
+      this.direction.id_direction = this.$route.params.id_direction;
+    },
+    methods: {
+      async saveCourse() {
+      const { id_direction, name_direction } = this.direction;
+      const updatedData = {
+        id_direction,
+        name_direction,
+      };
+
+      try {
+        const response = await fetch(`http://localhost/index.php/CourseEdit/${this.$route.params.id_direction}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(updatedData)
+        });
+
+        if (response.ok) {
+          console.log('Course data updated successfully');
+          // Добавить обработку успешного обновления
+          this.$router.push('/Course');
+        } else {
+          console.error('Error updating student data');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    }
+    }
     
   };
 </script>

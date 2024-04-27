@@ -14,8 +14,9 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="student in filteredStudents" :key="student.id">
+          <tr v-for="student in students" :key="student.id">
             <td style="padding: 20px;">{{ student.id }}</td>
+            <td style="padding: 20px;"><img :src="student.img_student" width="120px" height="80px"></td>
             <td style="padding: 20px;">{{ student.name_student }}</td>
             <td style="padding: 20px;">{{ student.course_direction }}</td>
             <td style="padding: 20px;">{{ student.name_group }}</td>
@@ -50,35 +51,64 @@ export default {
   data() {
     return {
       students: [],
-      idDirection: null,
     };
   },
   mounted() {
-    this.idDirection = this.$route.params.id_direction;
-    fetch("rest/students.json")
-      .then((response) => response.json())
-      .then((data) => {
-        this.students = data[2].data;
-      })
-      .catch((error) => { console.error("Error fetching JSON: ", error); });
-  },
-  computed: {
-    filteredStudents() {
-      return this.students.filter(student => student.course_direction === this.idDirection);
-    }
+    this.id_direction = this.$route.params.id_direction;
+    this.checkStudentsInDirection(this.id_direction);
   },
   methods: {
+    async checkStudentsInDirection(id_direction) {
+    try {
+      const response = await fetch(`http://localhost/index.php/StudentList/${id_direction}`);
+      const studentsData = await response.json();
+      this.students = studentsData;
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  },
     async deleteStudent(id) {
       try {
-        await fetch("rest/students.json", { method: "DELETE" });
-        // Ничего не делаем с ответом
+        const url = `http://localhost/index.php/${id}`;
+        console.log("DELETE request to URL:", url);
+        
+        const response = await fetch(url, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+
+        if (response.ok) {
+          this.students = this.students.filter(student => student.id !== id);
+        } else {
+          console.error('Error deleting student');
+        }
       } catch (error) {
-        // Ничего не делаем с ошибкой
+        console.error('Error:', error);
       }
-      // Визуально удаляем запись из списка студентов
-      this.students = this.students.filter((student) => student.id !== id);
     },
-  },
+    async updateStudent(id, updatedData) {
+      try {
+        const response = await fetch(`http://localhost/index.php/${id}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(updatedData)
+        });
+
+        if (response.ok) {
+          console.log('Student data updated successfully');
+          // Обновить данные о студенте на фронтенде
+        } else {
+          console.error('Error updating student data');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    }
+  }
 };
 </script>
 

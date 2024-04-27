@@ -95,6 +95,31 @@ $app->match('/{id}', function ($id, Request $request) use ($app, $database) {
     return new Response('Invalid request method.', 405);
 })->method('PUT');
 
+// Обработка PUT запроса
+$app->match('/CourseEdit/{id_direction}', function ($id_direction, Request $request) use ($app, $database) {
+    if ($request->isMethod('PUT')) {
+        // Получаем данные из тела запроса
+        $data = json_decode($request->getContent(), true);
+
+        // Дополнительные данные, которые могут прийти из формы\
+        $id_direction = $data['id_direction'];
+        $name_direction = $data['name_direction'];
+
+        // Вызываем метод обновления записи в базе данных
+        $database->updateCourse($id_direction, $name_direction);
+
+        // Возвращаем успешный ответ
+        return new Response("Course with ID $id_direction successfully updated", 200);
+    }
+
+    // Если метод запроса не PUT, возвращаем ошибку
+    return new Response('Invalid request method.', 405);
+})->method('PUT');
+
+// добавляем обработку CORS для запросов OPTIONS
+$app->options('/CourseEdit/{id_direction}', function ($id_direction, Request $request) use ($app) {
+    return '';
+});
 
 // Маршруты для обработки CORS (Post теперь не блокируется). Добавление студента
 $app->match('/', function(Request $request) use ($database) {
@@ -143,6 +168,11 @@ $app->match('/CourseAdd', function(Request $request) use ($database) {
     }
 
     return new Response('Method Not Allowed', 405);
+});
+
+$app->get('/StudentList/{id_direction}', function($id_direction) use ($database) {
+    $students = $database->checkStudentsInDirection($id_direction);
+    return json_encode($students);
 });
 
 $app->run();

@@ -7,7 +7,9 @@
         <th style="padding-right: 20px;">Направление подготовки</th>
       </tr>
       <tr v-for="direction in directions" :key="direction.id_direction">
-        <router-link :to="'/StudentList/' + direction.id_direction"><td style="padding: 20px;">{{ direction.id_direction }}</td></router-link>
+        <router-link :to="'/StudentList/' + direction.id_direction">
+          <td style="padding: 20px;">{{ direction.id_direction }}</td>
+        </router-link>
         <td style="padding: 20px;">{{ direction.name_direction }}</td>
         <td>
           <router-link :to="'/CourseEdit/' + direction.id_direction">

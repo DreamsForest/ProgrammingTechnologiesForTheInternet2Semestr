@@ -116,13 +116,18 @@ class Database
 
     public function checkStudentsInDirection($id_direction)
     {
-        $query = "SELECT COUNT(*) FROM students WHERE course_direction = ?";
+        $query = "SELECT * FROM students WHERE course_direction = ?";
         $stmt = $this->connect->prepare($query);
         $stmt->bind_param("i", $id_direction);
         $stmt->execute();
         $result = $stmt->get_result();
-        $count = $result->fetch_row()[0];
-        return $count > 0; // Возвращает true, если студенты найдены, иначе false
+
+        $students = array();
+        while ($row = $result->fetch_assoc()) {
+            $students[] = $row;
+        }
+
+        return $students;
     }
 
     public function deleteDirection($id_direction)
