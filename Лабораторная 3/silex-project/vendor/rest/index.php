@@ -77,12 +77,12 @@ $app->match('/{id}', function ($id, Request $request) use ($app, $database) {
         $data = json_decode($request->getContent(), true);
 
         // Дополнительные данные, которые могут прийти из формы\
-        $id = $data['id'];
-        $img_student = $data['img_student']; 
-        $name_student = $data['name_student'];
-        $course_direction = $data['course_direction'];
-        $name_group = $data['name_group'];
-        $year = $data['year'];
+        $id = filter_var($data['id'], FILTER_VALIDATE_INT);
+        $img_student = mysqli_real_escape_string($database->getConnect(), $data['img_student']); 
+        $name_student = mysqli_real_escape_string($database->getConnect(), $data['name_student']);
+        $course_direction = filter_var($data['course_direction'], FILTER_VALIDATE_INT);
+        $name_group = mysqli_real_escape_string($database->getConnect(), $data['name_group']);
+        $year = filter_var($data['year'], FILTER_VALIDATE_INT);
 
         // Вызываем метод обновления записи в базе данных
         $database->updateGroup($id, $img_student, $name_student, $course_direction, $name_group, $year);
@@ -102,8 +102,8 @@ $app->match('/CourseEdit/{id_direction}', function ($id_direction, Request $requ
         $data = json_decode($request->getContent(), true);
 
         // Дополнительные данные, которые могут прийти из формы\
-        $id_direction = $data['id_direction'];
-        $name_direction = $data['name_direction'];
+        $id_direction = filter_var($data['id_direction'], FILTER_VALIDATE_INT);
+        $name_direction = mysqli_real_escape_string($database->getConnect(), $data['name_direction']);
 
         // Вызываем метод обновления записи в базе данных
         $database->updateCourse($id_direction, $name_direction);
@@ -136,11 +136,11 @@ $app->match('/', function(Request $request) use ($database) {
     $method = $request->getMethod();
     if ($method === 'POST') {
         $data = json_decode($request->getContent(), true);
-        $img_student = $data['img_student'];
-        $name_student = $data['name_student'];
-        $course_direction = $data['course_direction'];
-        $name_group = $data['name_group'];
-        $year = $data['year'];
+        $img_student = mysqli_real_escape_string($database->getConnect(), $data['img_student']);
+        $name_student = mysqli_real_escape_string($database->getConnect(), $data['name_student']);
+        $course_direction = filter_var($data['course_direction'], FILTER_VALIDATE_INT);
+        $name_group = mysqli_real_escape_string($database->getConnect(), $data['name_group']);
+        $year = filter_var($data['year'], FILTER_VALIDATE_INT);
         $database->addGroup($img_student, $name_student, $course_direction, $name_group, $year);
         return new Response("Student added successfully", 200);
     }
@@ -162,7 +162,7 @@ $app->match('/CourseAdd', function(Request $request) use ($database) {
     // Обработка запроса
     if ($request->getMethod() === 'POST') {
         $data = json_decode($request->getContent(), true);
-        $name_direction = $data['name_direction'];
+        $name_direction = mysqli_real_escape_string($database->getConnect(), $data['name_direction']);
         $database->addCourse($name_direction);
         return new Response("Course added successfully", 200);
     }
